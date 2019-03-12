@@ -1,0 +1,88 @@
+.App{background-color:#FFFF;
+    height:100vh;width:100vw;
+    display:-ms-flexbox;
+    display:flex;
+  }
+    
+    
+.chatroom{width:inherit;
+    height:inherit;
+    background-color:rgb(253, 252, 247);
+    }
+    
+.chatroom h3{font-family:Pacifico,cursive;
+    background-color:rgb(0, 213, 228);
+    color:#fff;margin:0;height:8vh;
+    font-size:20px;
+    display:-ms-flexbox;
+    display:flex;
+    -ms-flex-align:center;
+    align-items:center;
+    ms-flex-pack:center;
+    justify-content:center} 
+
+    
+.chatroom .chats{-webkit-box-sizing:border-box;
+    box-sizing:border-box;
+    padding:0 15px ;margin:0 0 0;
+    height:86vh;
+    background-color: #FFFF;
+    overflow-y:scroll}
+    
+  .chatroom .chats .chat{background:rgb(203, 248, 250);
+    position:relative;
+    padding:5px 13px;
+    font-size:14px;
+    border-radius:10px;
+    list-style:none;
+    float:left;
+    clear:both;
+    margin:10px 0;
+    max-width:200px}
+    
+  .chatroom .chats .chat img{width:20px;
+    height:20px;
+    border-radius:50%;
+    position:absolute;
+    top:-10px;left:0}
+    
+  .chatroom .chats .chat.right{
+    float:right;clear:both}
+    
+  .chatroom .chats .chat a{
+    text-decoration:none;color:#3498db}
+    
+  .chatroom .input{height:6vh;
+    width:100%;
+    background:rgb(69, 211, 211);
+    display:-ms-flexbox;
+
+    border-radius: 5px;
+    display:flex;
+    -ms-flex-direction:row;
+    flex-direction:row;
+    -ms-flex-align:stretch;
+    align-items:center}
+    
+  .chatroom .input input[type=text]{
+    background:hsla(0,0%,100%,.5);
+    outline:0;
+    border:0px solid;
+    box-shadow: rgb(248, 248, 248);
+    padding:0 5px;
+    border-top-left-radius:5px;
+    border-bottom-left-radius:5px;
+    margin-left:10px;
+    width:70%}
+    
+    
+  .chatroom .input input[type=submit],.chatroom .input input[type=text]{
+    height:30px;
+    font-size:14px}
+    
+  .chatroom .input input[type=submit]{
+    background-color:rgb(8, 240, 39);
+    float: right;
+    width:20%;
+    border:0px solid;
+    cursor:pointer;}   
