@@ -7,7 +7,7 @@ import * as ROUTES from '../../constants/routes';
 
 const SignInPage = () => (
   <div>
-    <h2 style={{"margin-left": "43vw"}}>LoginIn</h2>
+    <h2 style={{"margin-left": "44vw"}}>Login</h2>
     <SignInForm />
     <SignUpLink />
     <SignInGoogle />    

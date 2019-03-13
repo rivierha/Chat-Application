@@ -20,6 +20,8 @@ const App = () => (
       <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
       <Route exact path={ROUTES.HOME} component={HomePage} />
       <Route path={'/chat/:id'} exact component={ChatRoom} />
+      <Route path={'/home/:id'} exact component={HomePage} />
+
       </div>    
   </Router>  
   );
