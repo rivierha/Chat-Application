@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
 import { withFirebase } from '../Firebase';
 import { withAuthorization } from '../Session';
-
 import { AuthUserContext } from '../Session';
-
-
 
 class SignOutButton extends Component{
   constructor(props) {
@@ -18,15 +15,11 @@ class SignOutButton extends Component{
   );
   this.props.firebase.user(this.value).update(
     {
-      status: "not-active"
+      status: "Inactive"
     }
   )
   this.props.firebase.doSignOut(); 
   }
-     do(){
-       
-     }
-
   render() {
     return (
       <button type="button" onClick={this.onClick}>

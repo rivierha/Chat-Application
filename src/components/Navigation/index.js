@@ -20,14 +20,10 @@ const NavigationAuth = () => (
   <ul>
     <li>
       <Link to={ROUTES.HOME}>Home</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.CHATROOM}>Chats</Link>
-    </li>
-    <li>
+      <div style={{"float":"right"}}>
       <SignOutButton />
-    </li>
-    
+      </div>
+    </li>    
   </ul>
 );
 

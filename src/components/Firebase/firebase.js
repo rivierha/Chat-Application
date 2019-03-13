@@ -2,7 +2,6 @@ import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 
-
 const config = {
     apiKey: "AIzaSyDd4ouWFLUz9nfIH7ML41VONcbbN-RJtfU",
     authDomain: "chat-application-ecfca.firebaseapp.com",
@@ -13,13 +12,12 @@ const config = {
   };
 
 class Firebase {
-    constructor() {
+      constructor() {
       app.initializeApp(config);
       this.fieldValue = app.firestore.FieldValue;
 
       this.auth = app.auth();
       this.db = app.firestore();
-      this.db.settings({ timestampsInSnapshots: true });
       window.db = this.db;
       this.googleProvider = new app.auth.GoogleAuthProvider();
     }
@@ -40,8 +38,6 @@ class Firebase {
     users = () => this.db.collection('users');
 
     chatroom = () => this.db.collection('chatroom');
-
-
   }
   
 export default Firebase;

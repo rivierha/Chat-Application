@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-
 import { SignUpLink } from '../SignUp';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
 const SignInPage = () => (
   <div>
-    <h1>SignIn</h1>
+    <h2 style={{"margin-left": "43vw"}}>LoginIn</h2>
     <SignInForm />
     <SignUpLink />
-    <SignInGoogle />
-    
+    <SignInGoogle />    
   </div>
 );
 
@@ -21,7 +19,6 @@ const INITIAL_STATE = {
   password: '',
   error: null,
 };
-
 
 class SignInFormBase extends Component {
   constructor(props) {
@@ -32,7 +29,6 @@ class SignInFormBase extends Component {
 
   onSubmit = event => {
     const { email, password } = this.state;
-
     this.props.firebase
       .doSignInWithEmailAndPassword(email, password)
       .then(authUser => {
@@ -44,8 +40,7 @@ class SignInFormBase extends Component {
           {
             status: "active"
           }
-        );
-        
+        );        
       })
       .then(() => {
         
@@ -65,29 +60,26 @@ class SignInFormBase extends Component {
 
   render() {
     const { email, password, error } = this.state;
-
     const isInvalid = password === '' || email === '';
-
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
+      <form style={{"margin-left": "40vw"}} onSubmit={this.onSubmit}>
+        <input style={{"margin": "20px", "display":"block"}}
           name="email"
           value={email}
           onChange={this.onChange}
           type="text"
           placeholder="Email Address"
         />
-        <input
+        <input style={{"margin": "20px", "display":"block"}}
           name="password"
           value={password}
           onChange={this.onChange}
           type="password"
           placeholder="Password"
         />
-        <button disabled={isInvalid} type="submit">
-          Sign In
+        <button style={{"margin": "20px", "display":"block"}} disabled={isInvalid} type="submit">
+          Login
         </button>
-
         {error && <p>{error.message}</p>}
       </form>
     );
@@ -97,7 +89,6 @@ class SignInFormBase extends Component {
 class SignInGoogleBase extends Component {
   constructor(props) {
     super(props);
-
     this.state = { error: null };
   }
 
@@ -105,7 +96,6 @@ class SignInGoogleBase extends Component {
     this.props.firebase
       .doSignInWithGoogle()
       .then(socialAuthUser => {
-        // Create a user in your Firebase Realtime Database too
         return this.props.firebase.user(socialAuthUser.user.uid).update(
           {
             status: "active",
@@ -126,9 +116,8 @@ class SignInGoogleBase extends Component {
     const { error } = this.state;
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Google</button>
-
+      <form style={{"margin-left": "43vw"}} onSubmit={this.onSubmit}>
+        <button style={{"align": "center"}} type="submit">Sign In with Google</button>
         {error && <p>{error.message}</p>}
       </form>
     );
@@ -136,15 +125,14 @@ class SignInGoogleBase extends Component {
 }
 
 const SignInGoogle = compose(
-  withRouter,
-  withFirebase,
-)(SignInGoogleBase);
+                      withRouter,
+                      withFirebase,
+                    )(SignInGoogleBase);
 
 const SignInForm = compose(
-  withRouter,
-  withFirebase,
-)(SignInFormBase);
+                    withRouter,
+                    withFirebase,
+                  )(SignInFormBase);
 
 export default SignInPage;
-
 export { SignInForm, SignInGoogle };

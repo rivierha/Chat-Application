@@ -6,8 +6,9 @@
     
     
 .chatroom{width:inherit;
-    height:inherit;
+    height:90vh;
     background-color:rgb(253, 252, 247);
+    flex-direction: column-reverse
     }
     
 .chatroom h3{font-family:Pacifico,cursive;
@@ -21,11 +22,18 @@
     ms-flex-pack:center;
     justify-content:center} 
 
+.active{
+  color: rgb(0, 153, 46)
+}
+
+.Inactive{
+  color: rgb(223, 1, 1)
+}
     
 .chatroom .chats{-webkit-box-sizing:border-box;
     box-sizing:border-box;
     padding:0 15px ;margin:0 0 0;
-    height:86vh;
+    height:80vh;
     background-color: #FFFF;
     overflow-y:scroll}
     
@@ -39,20 +47,12 @@
     clear:both;
     margin:10px 0;
     max-width:200px}
-    
-  .chatroom .chats .chat img{width:20px;
-    height:20px;
-    border-radius:50%;
-    position:absolute;
-    top:-10px;left:0}
-    
+  
   .chatroom .chats .chat.right{
     float:right;clear:both}
     
-  .chatroom .chats .chat a{
-    text-decoration:none;color:#3498db}
     
-  .chatroom .input{height:6vh;
+  .chatroom .input{height:7vh;
     width:100%;
     background:rgb(69, 211, 211);
     display:-ms-flexbox;
@@ -76,11 +76,11 @@
     width:70%}
     
     
-  .chatroom .input input[type=submit],.chatroom .input input[type=text]{
+  .chatroom .button,.chatroom .input input[type=text]{
     height:30px;
     font-size:14px}
     
-  .chatroom .input input[type=submit]{
+  .chatroom .input .button{
     background-color:rgb(8, 240, 39);
     float: right;
     width:20%;
