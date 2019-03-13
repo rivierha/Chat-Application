@@ -1,6 +1,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import 'firebase/storage';
 
 const config = {
     apiKey: "AIzaSyDd4ouWFLUz9nfIH7ML41VONcbbN-RJtfU",
@@ -18,7 +19,7 @@ class Firebase {
 
       this.auth = app.auth();
       this.db = app.firestore();
-      window.db = this.db;
+      this.storage = app.storage();
       this.googleProvider = new app.auth.GoogleAuthProvider();
     }
 
@@ -38,6 +39,8 @@ class Firebase {
     users = () => this.db.collection('users');
 
     chatroom = () => this.db.collection('chatroom');
+
+    storageref = () => this.storage.ref('chat_uploads');
   }
   
 export default Firebase;

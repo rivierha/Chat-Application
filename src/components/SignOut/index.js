@@ -15,7 +15,7 @@ class SignOutButton extends Component{
   );
   this.props.firebase.user(this.value).update(
     {
-      status: "Inactive"
+      status: "inactive"
     }
   )
   this.props.firebase.doSignOut(); 

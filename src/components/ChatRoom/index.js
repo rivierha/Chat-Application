@@ -3,6 +3,7 @@ import { withAuthorization } from '../Session';
 import { withFirebase } from '../Firebase';
 import './chatRoom.css';
 import ReactDOM from 'react-dom';
+import Modal from 'react-responsive-modal';
 import { Link,BrowserRouter as Router, Route } from 'react-router-dom';
 
 class ChatRoom extends Component{
@@ -13,25 +14,26 @@ class ChatRoom extends Component{
             var : this.props.location.pathname,
             res : "",
             chats : [],
-            uName : ""
+            uName : "",
+            img:null,
+            url:'',
+            text: "",
+            open: false,
+            progress:0
         }
         this.state.res = (this.state.var).slice(6);
     }
 
     componentDidMount(){
-
       if(this.props.firebase.auth.currentUser != null){
         this.value = this.props.firebase.auth.currentUser.email;
       }
-      else
-      this.value = null;
-
-      console.log(this.props.firebase.users().onSnapshot(
-
+      else {this.value = null;}
+      this.props.firebase.users().onSnapshot(
         snapshot => {
           let uName;
            snapshot.forEach((doc) => {
-             if(this.props.firebase.auth.currentUser.email == doc.data().email){
+             if(this.value == doc.data().email){
               console.log(doc.data().username);
               uName = doc.data().username;
 
@@ -41,8 +43,7 @@ class ChatRoom extends Component{
              }    
           })
         }
-      ))
-
+      )
 
       this.unsubscribe = this.props.firebase.chatroom().doc(this.state.res).collection("roomMessages").orderBy('time').onSnapshot(
         snapshot => {
@@ -51,7 +52,6 @@ class ChatRoom extends Component{
             snapshot.forEach(doc => {
                 chats.push( {...doc.data(), id : doc.time} )
             })
-
             this.setState({
               chats: chats
             });
@@ -66,22 +66,69 @@ class ChatRoom extends Component{
       this.unsubscribe();
    }
 
-    state = {
-        text: ""
-      }
-
     onChange(e) {
       this.setState({text: e.target.value});
     }
 
+    onOpenModal = () => {
+      this.setState({ open: true });
+    };
+  
+    onCloseModal = () => {    
+      this.setState({ open: false });  
+    };
+
+    handleChange = (e) => {
+      console.log(this.img);
+      if(e.target.files[0]){
+        console.log(e.target.files[0])
+        const img = e.target.files[0];
+        this.setState({img : img})
+      }
+
+    }
+
+    handleUpload = () => {
+      console.log(this.state.img.name.toString());
+      const {img} = this.state;
+      console.log(this.props.firebase.storageref())
+
+      const uploadTask = this.props.firebase.storageref().child(`${img.name}`).put(img); 
+      uploadTask.on('state_changed',
+       (snapshot) => {
+         var progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+         this.setState({progress: progress})
+
+       },
+       (error) => {
+        console.log(error);
+       },
+       () => {
+         this.props.firebase.storageref().child(`${img.name}`).getDownloadURL().then(
+          url => {
+            console.log(url);
+            this.setState({url : url})
+
+            this.props.firebase.chatroom().doc(this.state.res).collection("roomMessages").add({
+              userName: this.state.uName,  
+              content: url,
+              type: "file",
+              time: new Date().getTime()
+            })
+            .then( console.log("success"))
+            .catch(error => {
+              this.setState({ error });
+            })
+          }
+        )          
+       });
+      setTimeout(this.onCloseModal, 5000)
+
+    }
+
     submitMessage(e) {
-
-      console.log(this.state.uName);
-
-
       this.props.firebase.user(this.props.firebase.auth.currentUser.uid).get();
-
-        e.preventDefault();
+      e.preventDefault();
           if(this.state.text != '') {
             let msg = this.state.text;
             msg = msg.trim();
@@ -89,36 +136,35 @@ class ChatRoom extends Component{
             this.props.firebase.chatroom().doc(this.state.res).collection("roomMessages").add({
             userName: this.state.uName,  
             content: this.state.text,
+            type:"text",
             time: new Date().getTime()
           })
           .then( console.log("success"))
           .catch(error => {
             this.setState({ error });
           });
-        }
-        }
+          }
+          }
           this.setState({text: ""});
-
     }
 
     render() {
-        const { chats,res } = this.state;
+        const { chats,res,open } = this.state;
         const Message = ({chats}) => (
           <div>
             {chats.map(chat => (
             <div key = {chat.id}>
             <span className={`chat ${chat.userName === this.state.uName ? "right" : "left"}`} >
-               <div> <b>{chat.userName}</b></div>
-               {chat.content}
+            {chat.userName === this.state.uName ?  <div> <b></b></div> :  <div> <b>{chat.userName}</b></div> }
+            
+               {chat.type === "file"? <img src={chat.content} />: <div>{chat.content}</div>}
             </span>             
             </div>
             ))}  
           </div>
       );
-      return(
-          
-          <div className="chatroom">
-          
+      return(          
+          <div className="chatroom">          
           <h3>ChatRoom
           <Link to={`/home/${res}`} ><button style={{"margin-left":"10vw"}}>Add user </button>  </Link>
           </h3>      
@@ -128,9 +174,17 @@ class ChatRoom extends Component{
           <div className="input">    
           <form className="input" onSubmit={(e) => this.submitMessage(e)} >
           <input onChange={e => this.onChange(e)} type="text" value={this.state.text} placeholder="Enter your message and press ENTER"/>
-          <button className="button"> Send </button>
+          <button className="button"> Send </button><br />
           </form>
+          <button style={{"marginLeft":"10px"}} onClick={()=>{this.onOpenModal()}} className="button" > Upload image </button>
           </div>
+          <Modal open={open} onClose={this.onCloseModal} little>
+              <h2>Select an Image to upload</h2>
+              <progress value={this.state.progress} max="100"/>
+              <br />
+              <input onChange={e => this.handleChange(e)} type="file" /><br />
+              <button style={{"marginLeft": "18vw"}} onClick={this.handleUpload} >Upload</button>
+        </Modal> 
           </div>
       )
     }

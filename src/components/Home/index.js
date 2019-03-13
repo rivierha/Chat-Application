@@ -15,7 +15,7 @@ class HomePage extends Component {
       name : "",
       cid: 0,
       uid: 0,
-      room : "",group:0
+      room : "",group:0,id:''
     }; 
   }
 
@@ -37,14 +37,12 @@ class HomePage extends Component {
         user2: this.cid,
       }
     )  
-    this.onOpenModal();
+    
   }else {
 
-    let u1,u2,id;
+    let id;
     id = (this.props.location.pathname).slice(6);
-    u1 = (this.props.location.pathname).slice(6);
-    u1 = (this.props.location.pathname).slice(6);
-    console.log(id);
+    this.room = (this.props.location.pathname).slice(6);
     this.props.firebase.chatroom().doc(id).update(
       {
         user3: val
@@ -60,7 +58,9 @@ class HomePage extends Component {
       error => {
         this.setState({ error });
       });
+      
   }
+  this.onOpenModal();
   }
 
   state = {
@@ -113,19 +113,21 @@ class HomePage extends Component {
   }
 
   render() {
-    const { open, group } = this.state;
+    const { open, group,id } = this.state;
     const { users, loading, room } = this.state;
-    const UserList = ({ users }) => (
+    const UserList = ({ users,id }) => (
       <table style={{ "maxWidth":"30vw"}} style={{"marginLeft": "37vw"}} >
         {users.map(user => (
           <tr style={{"marginLeft": "34vw", "marginBottom": "40px", "fontSize":"20px", "maxWidth":"25vw"}} key={user.uid}> 
-            <td style={{"margin": "20px", "color":"rgb(5, 151, 170)","paddingLeft":"20px", "paddingRight":"20px"}}>
+            <td style={{"margin": "20px", "color":"rgb(19, 203, 216)","paddingLeft":"20px", "paddingRight":"20px"}}>
               <strong>{user.username}</strong>
             </td>
             <td style={{"marginLeft": "10vw","paddingLeft":"20px", "paddingRight":"20px"}} className={user.status} >
               {user.status}
             </td>
-            <button style={{"display": "inline", "float":"right"}} onClick={()=> this.onClick(user.uid,user.name)}>Chat</button>    
+            {this.props.location.pathname === '/home'?
+             <button style={{"display": "inline", "float":"right"}} onClick={()=> this.onClick(user.uid)}>Chat</button> : 
+             <button style={{"display": "inline", "float":"right"}} onClick={()=> this.onClick(user.uid)}>Chat</button> } 
           </tr>
         ))}
       </table>
@@ -134,8 +136,8 @@ class HomePage extends Component {
       <div >
         <h2 style={{"marginLeft": "43vw"}}>Users :</h2>
         {loading && <div>Loading ...</div>}
-        <UserList style={{"maxWidth":"25vw"}} users={users} />
-        {group != undefined &&  <Link group={group} to={`/chat/${group}`} ><button style={{"margin-left":"10vw"}}>Goto group chat </button>  </Link>} 
+        <UserList style={{"maxWidth":"25vw"}} users={users} id={id}/>
+        {group != undefined &&  <Link group={group} to={`/chat/${group}`} ><button style={{"marginLeft":"42vw", "marginTop":"20px"}}>Goto group chat </button>  </Link>} 
         <Modal open={open} onClose={this.onCloseModal} little>
               <h2>Your chat-room is ready! Press the button below to navigate to the room</h2>
               <button style={{"marginLeft": "18vw"}}><Link to={`/chat/${this.room}`}>GO !</Link> </button>
