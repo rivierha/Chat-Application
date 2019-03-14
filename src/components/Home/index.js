@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { withAuthorization } from '../Session';
-import { withFirebase } from '../Firebase';
-import { Link,BrowserRouter as Router, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Modal from 'react-responsive-modal';
 import '/home/rivierha/ReactProject/chat-application/src/components/ChatRoom/chatRoom.css';
 
@@ -77,9 +76,6 @@ class HomePage extends Component {
   };
 
   componentDidMount() {
-
-    console.log(this.props.location.pathname);
-
     if(this.props.firebase.auth.currentUser != null){
       this.value = this.props.firebase.auth.currentUser.email;
     }
@@ -93,7 +89,7 @@ class HomePage extends Component {
         let users = [];
         let group ;
           snapshot.forEach(doc => {
-            if(this.value != doc.data().email)
+            if(this.value !== doc.data().email)
             {
             users.push({ ...doc.data(), uid: doc.id })
             }else {
@@ -114,9 +110,9 @@ class HomePage extends Component {
 
   render() {
     const { open, group,id } = this.state;
-    const { users, loading, room } = this.state;
+    const { users, loading} = this.state;
     const UserList = ({ users,id }) => (
-      <table style={{ "maxWidth":"30vw"}} style={{"marginLeft": "37vw"}} >
+      <table style={{ "maxWidth":"30vw","marginLeft": "37vw"}} >
         {users.map(user => (
           <tr style={{"marginLeft": "34vw", "marginBottom": "40px", "fontSize":"20px", "maxWidth":"25vw"}} key={user.uid}> 
             <td style={{"margin": "20px", "color":"rgb(19, 203, 216)","paddingLeft":"20px", "paddingRight":"20px"}}>
@@ -137,7 +133,7 @@ class HomePage extends Component {
         <h2 style={{"marginLeft": "43vw"}}>Users :</h2>
         {loading && <div>Loading ...</div>}
         <UserList style={{"maxWidth":"25vw"}} users={users} id={id}/>
-        {group != undefined &&  <Link group={group} to={`/chat/${group}`} ><button style={{"marginLeft":"42vw", "marginTop":"20px"}}>Goto group chat </button>  </Link>} 
+        {group !== undefined &&  <Link group={group} to={`/chat/${group}`} ><button style={{"marginLeft":"42vw", "marginTop":"20px"}}>Goto group chat </button>  </Link>} 
         <Modal open={open} onClose={this.onCloseModal} little>
               <h2>Your chat-room is ready! Press the button below to navigate to the room</h2>
               <button style={{"marginLeft": "18vw"}}><Link to={`/chat/${this.room}`}>GO !</Link> </button>

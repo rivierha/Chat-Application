@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import { withFirebase } from '../Firebase';
-import { withAuthorization } from '../Session';
-import { AuthUserContext } from '../Session';
 
 class SignOutButton extends Component{
   constructor(props) {

@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link,BrowserRouter as Router, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import SignOutButton from '../SignOut';
-import ChatRoom from '../ChatRoom';
 import * as ROUTES from '../../constants/routes';
 
 import { AuthUserContext } from '../Session';

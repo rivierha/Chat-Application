@@ -7,7 +7,7 @@ import * as ROUTES from '../../constants/routes';
 
 const SignInPage = () => (
   <div>
-    <h2 style={{"margin-left": "44vw"}}>Login</h2>
+    <h2 style={{"margiLeft": "44vw"}}>Login</h2>
     <SignInForm />
     <SignUpLink />
     <SignInGoogle />    
@@ -32,9 +32,7 @@ class SignInFormBase extends Component {
     this.props.firebase
       .doSignInWithEmailAndPassword(email, password)
       .then(authUser => {
-        console.log(authUser);
         this.activeUser = this.props.firebase.user(authUser.user.uid);
-        console.log(this.activeUser);
         // Create a user in your Firebase Realtime Database too
         return this.props.firebase.user(authUser.user.uid).update(
           {
@@ -62,7 +60,7 @@ class SignInFormBase extends Component {
     const { email, password, error } = this.state;
     const isInvalid = password === '' || email === '';
     return (
-      <form style={{"margin-left": "40vw"}} onSubmit={this.onSubmit}>
+      <form style={{"marginLeft": "40vw"}} onSubmit={this.onSubmit}>
         <input style={{"margin": "20px", "display":"block"}}
           name="email"
           value={email}
@@ -116,7 +114,7 @@ class SignInGoogleBase extends Component {
     const { error } = this.state;
 
     return (
-      <form style={{"margin-left": "43vw"}} onSubmit={this.onSubmit}>
+      <form style={{"marginLeft": "43vw"}} onSubmit={this.onSubmit}>
         <button style={{"align": "center"}} type="submit">Sign In with Google</button>
         {error && <p>{error.message}</p>}
       </form>

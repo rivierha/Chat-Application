@@ -5,7 +5,7 @@ import * as ROUTES from '../../constants/routes';
 
 const SignUpPage = () => (
   <div>
-    <h3 style={{"margin-left": "43vw"}}>SignUp</h3>
+    <h3 style={{"marginLeft": "43vw"}}>SignUp</h3>
     <SignUpForm />
   </div>
 );
@@ -22,7 +22,6 @@ class SignUpFormBase extends Component {
   constructor(props) {
     super(props);
     this.state = { ...INITIAL_STATE };
-    const status=[];
   }
 
   onSubmit = event => {
@@ -42,7 +41,6 @@ class SignUpFormBase extends Component {
       })
       .then(authUser => {
         this.setState({ ...INITIAL_STATE });
-        console.log(this.setState );
         this.props.history.push(ROUTES.HOME);
       })
       .catch(error => {
@@ -71,7 +69,7 @@ class SignUpFormBase extends Component {
       username === '';
 
     return (
-      <form style={{"margin-left": "40vw"}} onSubmit={this.onSubmit}>
+      <form style={{"marginLeft": "40vw"}} onSubmit={this.onSubmit}>
         <input style={{"margin": "20px", "display":"block" }}
           name="username"
           value={username}
@@ -111,7 +109,7 @@ class SignUpFormBase extends Component {
 }
 
 const SignUpLink = () => (
-  <p style={{"margin-left": "40vw"}}>
+  <p style={{"marginLeft": "40vw"}}>
     Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
   </p>
 );

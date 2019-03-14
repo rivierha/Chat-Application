@@ -14,7 +14,7 @@ const withAuthorization = condition => Component => {
             this.props.history.push(ROUTES.SIGN_IN );  
           }
           else{
-            console.log(this.props.firebase.auth.currentUser.uid);
+            console.log("got uid");
           }
         },
       );

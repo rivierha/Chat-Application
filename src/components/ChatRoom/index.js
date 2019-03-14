@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import { withAuthorization } from '../Session';
-import { withFirebase } from '../Firebase';
 import './chatRoom.css';
-import ReactDOM from 'react-dom';
 import Modal from 'react-responsive-modal';
-import { Link,BrowserRouter as Router, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class ChatRoom extends Component{
 
@@ -33,7 +31,7 @@ class ChatRoom extends Component{
         snapshot => {
           let uName;
            snapshot.forEach((doc) => {
-             if(this.value == doc.data().email){
+             if(this.value === doc.data().email){
               console.log(doc.data().username);
               uName = doc.data().username;
 
@@ -89,6 +87,13 @@ class ChatRoom extends Component{
     }
 
     handleUpload = () => {
+      var dat = new Date()
+      var hrs = dat.getHours();
+      var min = dat.getMinutes();
+      var sec = dat.getSeconds();
+      console.log(hrs+':'+ min);
+      var time = hrs+':'+ min + ':'+sec ;
+      
       console.log(this.state.img.name.toString());
       const {img} = this.state;
       console.log(this.props.firebase.storageref())
@@ -113,7 +118,7 @@ class ChatRoom extends Component{
               userName: this.state.uName,  
               content: url,
               type: "file",
-              time: new Date().getTime()
+              time: time
             })
             .then( console.log("success"))
             .catch(error => {
@@ -127,17 +132,23 @@ class ChatRoom extends Component{
     }
 
     submitMessage(e) {
+      var dat = new Date()
+      var hrs = dat.getHours();
+      var min = dat.getMinutes();
+      var sec = dat.getSeconds();
+      console.log(hrs+':'+ min);
+      var time = hrs+':'+ min + ':'+sec ;
       this.props.firebase.user(this.props.firebase.auth.currentUser.uid).get();
       e.preventDefault();
-          if(this.state.text != '') {
+          if(this.state.text !== '') {
             let msg = this.state.text;
             msg = msg.trim();
-            if(msg != '') {
+            if(msg !== '') {
             this.props.firebase.chatroom().doc(this.state.res).collection("roomMessages").add({
             userName: this.state.uName,  
             content: this.state.text,
             type:"text",
-            time: new Date().getTime()
+            time: time
           })
           .then( console.log("success"))
           .catch(error => {
@@ -156,8 +167,9 @@ class ChatRoom extends Component{
             <div key = {chat.id}>
             <span className={`chat ${chat.userName === this.state.uName ? "right" : "left"}`} >
             {chat.userName === this.state.uName ?  <div> <b></b></div> :  <div> <b>{chat.userName}</b></div> }
-            
-               {chat.type === "file"? <img src={chat.content} />: <div>{chat.content}</div>}
+
+               {chat.type === "file"? <div><br /><img src={chat.content} alt='' /></div> : <div>{chat.content}</div>}
+               <div style={{"fontSize":"12px", "marginTop":"5px", "float":"right"}}>{chat.time.slice(0,5)}</div>
             </span>             
             </div>
             ))}  
@@ -166,7 +178,7 @@ class ChatRoom extends Component{
       return(          
           <div className="chatroom">          
           <h3>ChatRoom
-          <Link to={`/home/${res}`} ><button style={{"margin-left":"10vw"}}>Add user </button>  </Link>
+          <Link to={`/home/${res}`} ><button style={{"marginLeft":"10vw"}}>Add user </button>  </Link>
           </h3>      
           <ul className="chats">                    
               <Message chats={chats} />            
