@@ -94,10 +94,14 @@ class SignInGoogleBase extends Component {
     this.props.firebase
       .doSignInWithGoogle()
       .then(socialAuthUser => {
-        return this.props.firebase.user(socialAuthUser.user.uid).update(
+        return this.props.firebase.user(socialAuthUser.user.uid).set(
           {
+            username: socialAuthUser.user.displayName,
+            email: socialAuthUser.user.email,
             status: "active",
-          }
+            userId: Date.now()
+          },
+          { merge: true },
         );
       })
       .then(socialAuthUser => {
