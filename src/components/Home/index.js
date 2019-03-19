@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { withAuthorization } from '../Session';
 import { Link } from 'react-router-dom';
 import Modal from 'react-responsive-modal';
-import '../ChatRoom';
+import '/home/rivierha/ReactProject/chat-application/src/components/ChatRoom/chatRoom.css';
 
 class HomePage extends Component {
   constructor(props) {

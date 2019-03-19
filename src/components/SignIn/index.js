@@ -49,6 +49,8 @@ class SignInFormBase extends Component {
         this.setState({ error });
       });
 
+      
+
     event.preventDefault();
   };
 
