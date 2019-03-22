@@ -12,6 +12,7 @@ export class HomeComponent implements OnInit {
   items: Observable<any[]>;
   constructor(db: AngularFirestore) {
     this.items = db.collection('users').valueChanges();
+    console.log(this.items)
   }
 
   ngOnInit() {

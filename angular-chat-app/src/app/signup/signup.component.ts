@@ -34,9 +34,11 @@ export class SignupComponent implements OnInit {
     this.signupState.password = this.userForm.value.password;
     this.signupState.displayName = this.userForm.value.displayName;
 
-    this.authService.register(this.signupState.email, this.signupState.password, this.signupState.displayName);
+    this.authService.register(this.signupState.email, this.signupState.password, this.signupState.displayName).then(()=>{
+      this.router.navigate(['/home']);
+    });
     console.log("form submitted");
-    this.router.navigate(['/home']);
+    
 
   }
 

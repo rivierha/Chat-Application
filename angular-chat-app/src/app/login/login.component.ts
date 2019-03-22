@@ -31,11 +31,15 @@ export class LoginComponent implements OnInit {
     this.loginState.email = this.userForm.value.email;
     this.loginState.password = this.userForm.value.password;
 
-    this.authService.login(this.loginState.email, this.loginState.password);
+    this.authService.login(this.loginState.email, this.loginState.password).then(()=>{
+      this.router.navigate(['/home']);
+    });
   }
 
   click(){
     console.log("clicked")
-    this.authService.loginWithGoogle();
+    this.authService.loginWithGoogle().then(()=>{
+      this.router.navigate(['/home']);
+    })
   }
 }
