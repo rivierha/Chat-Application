@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+
+html, body {
+    background-color: whitesmoke;
+    margin: 0px;
+    height: 100%;
+    font-family: Georgia, 'Times New Roman', Times, serif
+
+}
+
+.navbar{ background : white }
+.content { color: rgb(22, 3, 189); font-size: 25px; }
+.space-between { flex: 1 1 auto }
+.card {
+    box-shadow: 0  10px  20px  rgba(0,0,0,0.19), 0  6px  6px  rgba(0,0,0,0.23);
+}
+.mat-card {
+    box-sizing: border-box !important;
+    flex: 1 1 50% !important;
+    max-width: 50% !important;
+    font-size: 25px;
+   
+    
+}
+.mat-card.mat-card-header{
+    color: rgb(22, 3, 189)
+}
+.input{
+    color: black
+}
+.h3 {
+    text-align: center !important;
+    color: rgb(22, 3, 189) !important
+}
