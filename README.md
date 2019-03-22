@@ -1,2 +1,2 @@
 # Chat-Application
-Chat Application using React and Firebase
+Chat Application using Angular and Firebase
