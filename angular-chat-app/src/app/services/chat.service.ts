@@ -20,7 +20,6 @@ export class ChatService {
   }
 
   async createChat(id1: string) {
-    console.log(localStorage.uid)
     let currentId = JSON.parse(localStorage.uid)
 
     if (id1 < currentId) {
@@ -35,10 +34,6 @@ export class ChatService {
       user1: id1,
       user2: JSON.parse(localStorage.uid)
     })
-      .then(function () {
-        console.log("chatroom created");
-
-      })
       .catch(function (error) {
         console.error("Error writing document: ", error);
       });
@@ -52,9 +47,6 @@ export class ChatService {
       type: upload,
       name: JSON.parse(localStorage.uName)
     })
-      .then(function () {
-        console.log("msg added to firestore")
-      })
       .catch(function (error) {
         console.error("Error writing document: ", error);
       });
@@ -70,7 +62,6 @@ export class ChatService {
 
     })
       .then(function (data) {
-        console.log(data);
         for (let i = 0; i < members.length; i++) {
           database1.collection('users').doc(members[i].id).update({
             subscribedTo: firebase.firestore.FieldValue.arrayUnion(data.id)
@@ -79,30 +70,23 @@ export class ChatService {
         database1.collection('groupchat').doc(data.id).update({
           id: data.id
         })
-        console.log(members[0].id)
 
-        console.log("group created with members")
+        console.log("group created")
       })
       .catch(function (error) {
         console.error("Error writing document: ", error);
       });
-    console.log(members, 'this is the group name', group);
     this.router.navigate([`/chat/${group}`]);
 
   }
 
   sendGroupMessage(msg: string, upload: string, group: string) {
-    console.log(this.groupSet)
-    console.log(msg, upload);
     this.db.collection('groupchat').doc(group).collection('roomMessages').add({
       content: msg,
       time: Date.now(),
       type: upload,
       name: JSON.parse(localStorage.uName)
     })
-      .then(function () {
-        console.log("msg added to firestore")
-      })
       .catch(function (error) {
         console.error("Error writing document: ", error);
       });

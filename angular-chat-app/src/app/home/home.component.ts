@@ -30,7 +30,6 @@ export class HomeComponent implements OnInit {
 
 
   constructor(private db: AngularFirestore, private router: Router, private authservice: AuthService, private chatservice: ChatService) {
-    console.log(this.router.url);
     if (this.router.url == '/home/group') {
       this.groupRoute = true;
       this.members = [];
@@ -46,27 +45,23 @@ export class HomeComponent implements OnInit {
         const data = a.payload.doc.data() as Item;
 
         const uid = a.payload.doc.id;
-        console.log(uid, data);
         return { uid, ...data };
 
       }))
     );
 
     this.db.collection('users').doc(this.currentUserId).valueChanges().subscribe((data) => {
-      console.log(" data recieved",data);
       let subbedTo = [];
       let groups = [];
       subbedTo = data.subscribedTo;
       if (data.subscribedTo) {
         for (let i = 0; i < subbedTo.length; i++) {
           this.db.collection('groupchat').doc(subbedTo[i]).valueChanges().subscribe(group => {
-            console.log(group);
             groups.push(group)
           })
         }
       }
       this.groups = groups;
-      console.log(this.groups);
     })
 
   }
@@ -101,7 +96,6 @@ export class HomeComponent implements OnInit {
         name: name
       });
     }
-    console.log(this.members);
   }
 
   create() {
@@ -110,7 +104,6 @@ export class HomeComponent implements OnInit {
       name: JSON.parse(localStorage.uName)
     });
     this.groupName = this.groupForm.value.groupname;
-    console.log(this.members);
     this.chatservice.createGroup(this.members, this.groupName);
 
   }

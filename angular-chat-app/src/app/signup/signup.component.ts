@@ -37,7 +37,6 @@ export class SignupComponent implements OnInit {
     this.authService.register(this.signupState.email, this.signupState.password, this.signupState.displayName).then(() => {
       setTimeout(() => { this.router.navigate(['/home']) }, 4000)
     });
-    console.log("form submitted");
   }
 
 }

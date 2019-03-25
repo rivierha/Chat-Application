@@ -34,7 +34,6 @@ export class InputFormComponent implements OnInit {
 
   uploadpic() {
     let file = this.selectedFiles.item(0);
-    console.log(file);
     let uniqkey = 'pic-' + file.name;
     const uploadTask = this.storage.upload('/chat_uploads/' + uniqkey, file).then(
       () => {
@@ -42,7 +41,6 @@ export class InputFormComponent implements OnInit {
         let downloadUrl = ref.getDownloadURL().subscribe(url => {
           const URL = url;
           this.message = URL;
-          console.log(URL);
           if (this.route.snapshot.paramMap.get("id") == localStorage.room)
           this.chat.sendMessage(URL, "file"); 
           else
@@ -58,12 +56,10 @@ export class InputFormComponent implements OnInit {
     this.message = this.message.trim();
     if(this.message !== ''){
     if (this.route.snapshot.paramMap.get("id") == localStorage.room) {
-      console.log("checking")
       this.chat.sendMessage(this.message, "text");
       this.message = '';
     }
     else {   
-      console.log("checking Group")
       this.chat.sendGroupMessage(this.message, "text", this.route.snapshot.paramMap.get("id"));
       this.message = '';
     }

@@ -42,15 +42,12 @@ export class AuthService {
     try {
       await this.afAuth.auth.signInWithEmailAndPassword(email, password).then(
         res => {
-          console.log(res);
           this.db.collection("users").doc(res.user.uid).update({
             status: "active"
           })
-          console.log("status active")
           userDoc = database1.doc(`users/${res.user.uid}`)
           userInfo = userDoc.valueChanges();
           userInfo.subscribe(data => {
-            console.log(data);
             localStorage.setItem('uid', JSON.stringify(data.id));
             localStorage.setItem('uEmail', JSON.stringify(data.email));
             localStorage.setItem('uName', JSON.stringify(data.displayName));
@@ -81,7 +78,6 @@ export class AuthService {
                     userInfo = userDoc.valueChanges();
                     userInfo.subscribe(data => {
                       
-                      console.log(data);
                       localStorage.setItem('uid', JSON.stringify(data.id));
                       localStorage.setItem('uEmail', JSON.stringify(data.email));
                       localStorage.setItem('uName', JSON.stringify(data.displayName));
@@ -102,7 +98,6 @@ export class AuthService {
                     userDoc = database1.doc(`users/${res.user.uid}`)
                     userInfo = userDoc.valueChanges();
                     userInfo.subscribe(data => {
-                      console.log(data);
                       localStorage.setItem('uid', JSON.stringify(data.id));
                       localStorage.setItem('uEmail', JSON.stringify(data.email));
                       localStorage.setItem('uName', JSON.stringify(data.displayName));
@@ -135,7 +130,6 @@ export class AuthService {
             userDoc = database1.doc(`users/${res.user.uid}`)
             userInfo = userDoc.valueChanges();
             userInfo.subscribe(data => {
-              console.log(data);
               localStorage.setItem('uid', JSON.stringify(data.id));
               localStorage.setItem('uEmail', JSON.stringify(data.email));
               localStorage.setItem('uName', JSON.stringify(data.displayName));
@@ -149,7 +143,6 @@ export class AuthService {
   }
 
   async logout() {
-    console.log(localStorage.uid)
     let uid = JSON.parse(localStorage.uid)
     this.db.collection("users").doc(uid).update({
       status: "inactive"

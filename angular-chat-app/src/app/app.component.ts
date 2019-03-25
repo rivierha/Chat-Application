@@ -12,7 +12,6 @@ export class AppComponent implements OnInit {
   signupRoute = false;
 
   constructor(private authService: AuthService, private router: Router) {
-    console.log(this.router.url);
   }
 
   routeCheck() {

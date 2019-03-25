@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, Query } from '@angular/core';
 import { ChatService } from '../services/chat.service';
 import { Observable } from 'rxjs';
 import { Msg } from '../chatmsg';
@@ -22,14 +22,12 @@ export class FeedComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     if(this.paramid == localStorage.room){
-    this.feed = this.db.collection('chatroom').doc(localStorage.room).collection('roomMessages', ref => ref.orderBy('time'));
+    this.feed = this.db.collection('chatroom').doc(localStorage.room).collection('roomMessages', ref => ref.orderBy('time', 'asc'));
     this.feeds = this.feed.valueChanges();
-    console.log(this.feed);
     }
     else {
-    this.feed = this.db.collection('groupchat').doc(this.route.snapshot.paramMap.get("id")).collection('roomMessages', ref => ref.orderBy('time'));
+    this.feed = this.db.collection('groupchat').doc(this.route.snapshot.paramMap.get("id")).collection('roomMessages', ref => ref.orderBy('time', 'asc'));
     this.feeds = this.feed.valueChanges();
-    console.log(this.feed);
     }    
   }
 
@@ -37,11 +35,9 @@ export class FeedComponent implements OnInit, OnChanges {
     if(this.paramid == localStorage.room){
     this.feed = this.chat.displayMsg();
     this.feeds = this.feed.valueChanges();
-    console.log(this.feed);
     }else {
-    this.feed = this.db.collection('groupchat').doc(this.route.snapshot.paramMap.get("id")).collection('roomMessages', ref => ref.orderBy('time'));
+    this.feed = this.db.collection('groupchat').doc(this.route.snapshot.paramMap.get("id")).collection('roomMessages', ref => ref.orderBy('time', 'asc'));
     this.feeds = this.feed.valueChanges();
-    console.log(this.feed);
     }
   }
 
