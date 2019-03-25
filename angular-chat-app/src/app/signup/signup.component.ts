@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from  '../services/auth.service';
+import { AuthService } from '../services/auth.service';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { Router } from  "@angular/router";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-signup',
@@ -14,7 +14,7 @@ export class SignupComponent implements OnInit {
     email: '',
     password: '',
     displayName: ''
-  }; 
+  };
 
   userForm = new FormGroup({
     email: new FormControl(''),
@@ -24,22 +24,20 @@ export class SignupComponent implements OnInit {
 
   });
 
-  constructor(private  authService:  AuthService, private fb: FormBuilder, private router: Router) { }
+  constructor(private authService: AuthService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit() {
   }
 
-  signup(){
+  signup() {
     this.signupState.email = this.userForm.value.email;
     this.signupState.password = this.userForm.value.password;
     this.signupState.displayName = this.userForm.value.displayName;
 
-    this.authService.register(this.signupState.email, this.signupState.password, this.signupState.displayName).then(()=>{
-      this.router.navigate(['/home']);
+    this.authService.register(this.signupState.email, this.signupState.password, this.signupState.displayName).then(() => {
+      setTimeout(() => { this.router.navigate(['/home']) }, 4000)
     });
     console.log("form submitted");
-    
-
   }
 
 }

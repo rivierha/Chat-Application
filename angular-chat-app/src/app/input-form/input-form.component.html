@@ -1,0 +1,11 @@
+  <input 
+      class="chatInput" 
+      [(ngModel)]="message" 
+      (keydown)="handleSubmit($event)"
+      />
+
+  <button mat-flat-button class="chatButton" (click)=send()>Send</button>
+  <mat-icon class="md-48" (click)="fileInput.click()" >photo</mat-icon>
+  <input #fileInput type="file" (change)="clicked($event)" style="display:none;" />
+ 
+

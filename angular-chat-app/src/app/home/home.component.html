@@ -1,5 +1,53 @@
-<ul>
-    <li *ngFor="let item of items | async">
-      {{ item.username }} {{item.email}} {{item.status}} {{item.uid}}
-    </li>
-  </ul>
+<div style="overflow-y: scroll;height: 90vh">
+    <div class="usertab">
+        <h2>USERS</h2>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="center center" *ngFor="let item of subscribe | async" fxLayoutGap="10px" style="margin-top: 5px; align-items: stretch">
+        <mat-card fxFlex fxLayout="row" *ngIf="currentUserId !== item.uid">
+            <div fxFlex="2" fxLayoutAlign="flex-start" class="{{item.status}}">
+                <mat-icon>stop</mat-icon>
+            </div>
+            <mat-card-header fxFlex>
+                <mat-card-title style="color: rgb(22, 3, 189);">
+                    {{ item.displayName }}
+                </mat-card-title>
+                <mat-card-subtitle style="color: rgb(22, 3, 189)">
+                    {{ item.email }}
+                </mat-card-subtitle>
+            </mat-card-header>
+            <button *ngIf="!groupRoute" mat-raised-button fxFlex="4" fxLayoutAlign="flex-end" mat-button (click)="chat(item.uid)">CHAT</button>
+            <button *ngIf="groupRoute" mat-raised-button fxFlex="4" fxLayoutAlign="flex-end" matTooltip='Add {{item.displayName}} to group'
+                mat-button (click)="addUser(item.uid, item.displayName)">ADD </button>
+        </mat-card>
+    </div>
+    <div *ngIf="!groupRoute">
+        <div class="usertab">
+            <h2>GROUPS</h2>
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="center center" *ngFor="let item of groups" fxLayoutGap="10px" style="margin-top: 5px; align-items: stretch">
+
+            <mat-card fxFlex fxLayout="row">
+                <div fxFlex="2" fxLayoutAlign="flex-start">
+                    <mat-icon>group_work</mat-icon>
+                </div>
+                <mat-card-header fxFlex>
+                    <mat-card-title style="color: rgb(22, 3, 189); margin-left: 5px">
+                        {{ item.groupName }}
+                    </mat-card-title>
+                </mat-card-header>
+                <button mat-raised-button fxFlex="4" fxLayoutAlign="flex-end" matTooltip="Join {{item.groupName}}" mat-button (click)="chatGroup(item.groupName)">JOIN</button>
+            </mat-card>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div fxLayout="column" fxLayoutAlign="center center">
+        <form *ngIf="groupRoute" [formGroup]="groupForm">
+            <mat-form-field>
+                <input type="text" matInput placeholder="Enter group name.." formControlName="groupname" required>
+            </mat-form-field>
+            <button type="submit" *ngIf="groupRoute" mat-raised-button mat-button (click)="create()" [disabled]="!groupForm.valid">Create</button>
+        </form>
+    </div>
+
+</div>

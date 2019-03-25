@@ -7,12 +7,12 @@ html, body {
     background-color: whitesmoke;
     margin: 0px;
     height: 100%;
-    font-family: Georgia, 'Times New Roman', Times, serif
+    font-family: 'Source Sans Pro', sans-serif;
 
 }
 
 .navbar{ background : white }
-.content { color: rgb(22, 3, 189); font-size: 25px; }
+.content {  font-size: 25px; }
 .space-between { flex: 1 1 auto }
 .card {
     box-shadow: 0  10px  20px  rgba(0,0,0,0.19), 0  6px  6px  rgba(0,0,0,0.23);
@@ -21,9 +21,7 @@ html, body {
     box-sizing: border-box !important;
     flex: 1 1 50% !important;
     max-width: 50% !important;
-    font-size: 25px;
-   
-    
+        
 }
 .mat-card.mat-card-header{
     color: rgb(22, 3, 189)
@@ -34,4 +32,14 @@ html, body {
 .h3 {
     text-align: center !important;
     color: rgb(22, 3, 189) !important
+}
+.active {
+    color: rgb(6, 216, 6)
+}
+.inactive {
+    color: red
+}
+.usertab {
+    text-align: center;
+    color: darkblue
 }

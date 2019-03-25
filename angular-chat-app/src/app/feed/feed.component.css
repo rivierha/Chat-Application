@@ -1,0 +1,18 @@
+.feed{
+    display: flex;
+    flex-direction: column;
+}
+
+.message{
+    display: flex;
+    margin: 10px 0;
+}
+.msgGap{
+    margin: 5px
+}
+.floatMsgRight{
+    max-width: 600px;float: right;background-color:  rgb(255, 255, 239);
+}
+.floatMsgLeft{
+    max-width: 600px;float: left;background-color: rgb(255, 255, 255);
+}

@@ -1,0 +1,31 @@
+.mainContent{
+    display: flex;
+}
+
+.feedWrapper {
+    background-color: aliceblue;
+    font-size: 1.2em;
+    flex: 5;
+    order: 2;
+    overflow-y: scroll;
+}
+
+.chatFormWrapper {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    z-index: 3;
+}
+
+#scroll-style::-webkit-scrollbar-track
+{
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+.content{
+    background-color: aliceblue;
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box;
+    padding:10px 15px ;margin:0 0 0;
+}
