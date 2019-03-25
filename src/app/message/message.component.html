@@ -1,0 +1,10 @@
+<div fxFlex class="messageContent" fxLayoutALign="flex-end">
+    <div style="font-size: 15px">
+        <b>{{ userName }}</b>
+    </div>
+    <div>
+        <div *ngIf="type == 'text'" class="messageData">{{ messageContent }}</div>
+        <img *ngIf="type == 'file'" style="width: 270px; height: 270px;" [src]="messageContent">
+        <div style="font-size: 10px;">{{ timeStamp | date:'short' }}</div>
+    </div>
+</div>

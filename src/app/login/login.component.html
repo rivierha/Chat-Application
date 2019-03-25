@@ -1,0 +1,33 @@
+<br>
+<form [formGroup]="userForm" (ngSubmit)="login()">
+    <div fxLayout="row wrap" fxLayoutAlign="center center"> 
+        <mat-card fxFlex="100" >
+            <mat-card-header fxLayoutAlign="center center" >
+                <mat-card-title>
+                    <h3 style="color: rgb(22, 3, 189)">Login</h3>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content fxLayout="column">
+                <mat-form-field>
+                <input type="email" matInput placeholder="Enter your email" formControlName="email" required >
+                </mat-form-field>
+
+                <mat-form-field>
+                <input type="password" matInput placeholder="Enter your password" formControlName="password" required >
+                </mat-form-field>  
+
+                <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid" >
+                   <span>Login</span>&nbsp;<mat-icon>done</mat-icon>
+                </button>
+                <br>
+
+                <button mat-raised-button color="warn" type="button" (click)="click()">
+                  &nbsp;<b>Sign in with google</b>
+               </button>
+               <br>
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+</form>
+

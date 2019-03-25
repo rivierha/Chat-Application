@@ -1,0 +1,10 @@
+.messageContent{
+    width: auto;
+    padding: 8px;
+    border-radius: 8px;   
+    box-shadow: 0 3px 6px rgba(0,0,0,0.26), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.messageData{
+    width: auto; max-width: 1000px; font-size:20px ;  margin: 5px 5px 5px 0px;}
+

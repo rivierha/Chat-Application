@@ -1,0 +1,22 @@
+<mat-toolbar class="navbar" style="min-height: 80px !important; height: 10vh !important;">
+  <button mat-icon-button color="primary">
+    <mat-icon>forum</mat-icon>
+  </button>
+  <span class="content">Chat-App</span>
+  <span class="space-between"></span>
+  <button mat-raised-button routerLink="/signup" color="primary" *ngIf="!routeCheck()">
+    <mat-icon>add</mat-icon> &nbsp;
+    <span>SignUp</span>
+  </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <button mat-raised-button routerLink="/login" color="primary" *ngIf="!routeCheck()">
+    <mat-icon>account_circle</mat-icon> Login
+  </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <button mat-fab color="accent" routerLink="/home/group" matTooltip="Create a new group" *ngIf="routeCheck()">
+    <mat-icon>group</mat-icon>
+  </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <button mat-raised-button color="primary" *ngIf="routeCheck()" (click)="authService.logout()">
+    <mat-icon>account_circle</mat-icon> &nbsp;
+    <span>Logout</span>
+  </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</mat-toolbar>
+<router-outlet style=" height: 90vh !important;"></router-outlet>
