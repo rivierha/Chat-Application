@@ -17,13 +17,10 @@ export class InputFormComponent implements OnInit {
   color: string = 'primary';
   mode: 'determinate';
   progressBarValue;
-  paramid: string = '';
-  isGroup: boolean = true;
-
 
   constructor(private chat: ChatService, private route: ActivatedRoute, private storage: AngularFireStorage) {
-    if (this.paramid == localStorage.room)
-      this.isGroup = false;
+
+      console.log(this.route.snapshot.paramMap.get("id") == localStorage.room)
   }
 
   ngOnInit() {
@@ -46,10 +43,10 @@ export class InputFormComponent implements OnInit {
           const URL = url;
           this.message = URL;
           console.log(URL);
-          if (this.isGroup)
-            this.chat.sendGroupMessage(URL, "file", this.route.snapshot.paramMap.get("id"));
+          if (this.route.snapshot.paramMap.get("id") == localStorage.room)
+          this.chat.sendMessage(URL, "file"); 
           else
-            this.chat.sendMessage(URL, "file");
+            this.chat.sendGroupMessage(URL, "file", this.route.snapshot.paramMap.get("id"));
           this.message = '';
         })
       }
@@ -60,14 +57,14 @@ export class InputFormComponent implements OnInit {
   send() {
     this.message = this.message.trim();
     if(this.message !== ''){
-    if (this.isGroup) {
-      console.log("checking Group")
-      this.chat.sendGroupMessage(this.message, "text", this.route.snapshot.paramMap.get("id"));
-      this.message = '';
-    }
-    else {
+    if (this.route.snapshot.paramMap.get("id") == localStorage.room) {
       console.log("checking")
       this.chat.sendMessage(this.message, "text");
+      this.message = '';
+    }
+    else {   
+      console.log("checking Group")
+      this.chat.sendGroupMessage(this.message, "text", this.route.snapshot.paramMap.get("id"));
       this.message = '';
     }
   }

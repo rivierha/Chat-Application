@@ -11,7 +11,7 @@
   <button mat-raised-button routerLink="/login" color="primary" *ngIf="!routeCheck()">
     <mat-icon>account_circle</mat-icon> Login
   </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <button mat-fab color="accent" routerLink="/home/group" matTooltip="Create a new group" *ngIf="routeCheck()" (click)="click()">
+  <button mat-fab color="accent" routerLink="/home/group" matTooltip="Create a new group" *ngIf="routeCheck()">
     <mat-icon>group</mat-icon>
   </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <button mat-raised-button color="primary" *ngIf="routeCheck()" (click)="authService.logout()">
