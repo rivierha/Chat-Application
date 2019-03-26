@@ -11,7 +11,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'home', component: HomeComponent, canActivate: [AuthenticationGuard]},
-  {path: 'home/group', component: HomeComponent, canActivate: [AuthenticationGuard]},
+  {path: 'home/:id', component: HomeComponent, canActivate: [AuthenticationGuard]},
   {path: 'chat/:id', component: ChatRoomComponent, canActivate: [AuthenticationGuard]},
   {path: '', redirectTo: "/login", pathMatch: "full"},
   {path: '**', component: ErrorComponent}

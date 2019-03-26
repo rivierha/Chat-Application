@@ -5,8 +5,9 @@ import { map } from 'rxjs/operators';
 import { Item } from '../user';
 import { AuthService } from '../services/auth.service';
 import { ChatService } from '../services/chat.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-home',
@@ -22,21 +23,28 @@ export class HomeComponent implements OnInit {
   members: Array<any> = [];
   groupName: string = "";
   groups: Array<any> = [];
-  block: boolean = false;
+  routeId: string;
+  groupchat: boolean;
 
   groupForm = new FormGroup({
     groupname: new FormControl('')
   });
 
 
-  constructor(private db: AngularFirestore, private router: Router, private authservice: AuthService, private chatservice: ChatService) {
-    if (this.router.url == '/home/group') {
+  constructor(private db: AngularFirestore, private router: Router, private route: ActivatedRoute, private authservice: AuthService, private chatservice: ChatService) {
+    this.routeId = this.route.snapshot.paramMap.get("id");
+    if (this.routeId == 'group') {
       this.groupRoute = true;
       this.members = [];
-      this.block = false
     } else
       this.groupRoute = false;
-      
+
+    if (this.routeId != 'group' && this.routeId != null) {
+      this.groupchat = true;
+      this.members = [];
+    } else
+      this.groupchat = false;
+
     this.currentUserId = JSON.parse(localStorage.uid);
 
     this.userCollection = db.collection('users');
@@ -73,6 +81,12 @@ export class HomeComponent implements OnInit {
   chatGroup(val) {
     this.router.navigate([`chat/${val}`])
   }
+
+  gotoGroup() {
+    this.chatservice.updateGroup(this.members, this.routeId);
+    this.router.navigate([`chat/${this.routeId}`])
+  }
+
 
   addUser(id, name) {
     let alreadyExists = false;
@@ -113,7 +127,6 @@ export class HomeComponent implements OnInit {
       this.groupRoute = true;
       this.members = [];
     }
-
     else
       this.groupRoute = false;
 

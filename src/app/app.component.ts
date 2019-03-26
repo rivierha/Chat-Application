@@ -10,17 +10,22 @@ import { Router } from "@angular/router";
 export class AppComponent implements OnInit {
   title = 'angular-chat-app';
   signupRoute = false;
+  home: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {
   }
 
   routeCheck() {
     if (this.router.url != '/login' && this.router.url != '/signup' && this.router.url != '/') {
+      if(this.router.url != '/home')
+        this.home = true;
+      else
+      this.home = false;
       this.signupRoute = true
-    } else {
+    } else { 
       this.signupRoute = false;
+      this.home = false;
     }
-
     return this.signupRoute;
   }
 

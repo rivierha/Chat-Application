@@ -77,7 +77,7 @@ export class AuthService {
                     userDoc = database1.doc(`users/${res.user.uid}`)
                     userInfo = userDoc.valueChanges();
                     userInfo.subscribe(data => {
-                      
+
                       localStorage.setItem('uid', JSON.stringify(data.id));
                       localStorage.setItem('uEmail', JSON.stringify(data.email));
                       localStorage.setItem('uName', JSON.stringify(data.displayName));

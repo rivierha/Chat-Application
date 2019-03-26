@@ -1,3 +1,3 @@
-    <div class="msgGap" *ngFor="let message of feeds | async">
-      <app-message [ngClass]="{'floatMsgRight': message.name == cName, 'floatMsgLeft': message.name != cName}" [chatMessage]=message></app-message>
-    </div>
+<div class="msgGap" *ngFor="let message of feeds | async">
+  <app-message [ngClass]="{'floatMsgRight': message.name == cName, 'floatMsgLeft': message.name != cName}" [chatMessage]=message></app-message>
+</div>

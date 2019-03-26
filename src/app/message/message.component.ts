@@ -13,18 +13,32 @@ export class MessageComponent implements OnInit {
   @Input() chatMessage: Msg;
   userName: string;
   messageContent: string;
-  timeStamp: Date = new Date();
-  isOwnMessage: boolean;
-  ownEmail: string;
+  timeStamp: Date;
   type: string;
   check = JSON.parse(localStorage.uName);
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+
+  }
 
   ngOnInit(chatMessage = this.chatMessage) {
-    this.messageContent = chatMessage.content;
-    this.timeStamp = chatMessage.time;
-    this.type = chatMessage.type;
+    //  console.log(this.chatMessage.msgTime);
     this.userName = chatMessage.name;
+    this.messageContent = chatMessage.content;
+    this.type = chatMessage.type;
+    this.timeStamp = chatMessage.msgTime;
+    // console.log(chatMessage.time);
+
+    // console.log(this.timeStamp.toMillis())
+    // this.rightTime = this.timeStamp.seconds;
   }
+
+  // renderMensaje() {
+  //   let date: Date;
+  //   date = (this.chatMessage.time).toDate();
+  //   let hours = date.getHours();
+  //   let minutes = date.getMinutes();
+  //   let res = hours + ":" + minutes;
+  //   return res;
+  // }
 
 }
