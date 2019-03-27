@@ -30,13 +30,21 @@ export class SignupComponent implements OnInit {
   }
 
   signup() {
-    this.signupState.email = this.userForm.value.email;
-    this.signupState.password = this.userForm.value.password;
-    this.signupState.displayName = this.userForm.value.displayName;
+    if (this.userForm.value.password === this.userForm.value.confirmPassword) {
+      this.signupState.email = this.userForm.value.email;
+      this.signupState.password = this.userForm.value.password;
+      this.signupState.displayName = this.userForm.value.displayName;
 
-    this.authService.register(this.signupState.email, this.signupState.password, this.signupState.displayName).then(() => {
-      setTimeout(() => { this.router.navigate(['/home']) }, 4000)
-    });
+      this.authService.register(this.signupState.email, this.signupState.password, this.signupState.displayName).then(() => {
+        setTimeout(() => { this.router.navigate(['/home']) }, 4000)
+      })
+      .catch((error)=> {
+        alert(error)
+      })
+    } else {
+      this.userForm.controls['confirmPassword'].setErrors({
+        'notMatched': true
+      });
+    }
   }
-
 }

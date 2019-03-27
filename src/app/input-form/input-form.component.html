@@ -1,11 +1,6 @@
-  <input 
-      class="chatInput" 
-      [(ngModel)]="message" 
-      (keydown)="handleSubmit($event)"
-      />
+<input placeholder="Enter your message.." class="chatInput" [(ngModel)]="message" (keydown)="handleSubmit($event)" />
 
-  <button mat-flat-button class="chatButton" (click)=send()>Send</button>
-  <mat-icon class="md-48" (click)="fileInput.click()" >photo</mat-icon>
-  <input #fileInput type="file" (change)="clicked($event)" style="display:none;" />
- 
-
+<button mat-flat-button class="chatButton" (click)="send()">Send</button>&nbsp;&nbsp;
+<mat-icon class="md-48" (click)="fileInput.click()" matTooltip="Send a photo">photo_library</mat-icon>
+<input #fileInput type="file" (change)="clicked($event)" style="display:none;" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<mat-icon class="md-48" (click)="goto()" matTooltip="Add users to group" *ngIf="isGroupChat()">group_add</mat-icon>

@@ -15,12 +15,12 @@
                     {{ item.email }}
                 </mat-card-subtitle>
             </mat-card-header>
-            <button *ngIf="!groupRoute" mat-raised-button fxFlex="4" fxLayoutAlign="flex-end" mat-button (click)="chat(item.uid)">CHAT</button>
-            <button *ngIf="groupRoute" mat-raised-button fxFlex="4" fxLayoutAlign="flex-end" matTooltip='Add {{item.displayName}} to group'
+            <button *ngIf="!groupRoute && !groupchat " mat-raised-button fxFlex="4" fxLayoutAlign="flex-end" mat-button (click)="chat(item.uid)">CHAT</button>
+            <button *ngIf="groupRoute || groupchat" mat-raised-button fxFlex="4" fxLayoutAlign="flex-end" matTooltip='Add {{item.displayName}} to group'
                 mat-button (click)="addUser(item.uid, item.displayName)">ADD </button>
         </mat-card>
     </div>
-    <div *ngIf="!groupRoute">
+    <div *ngIf="!groupRoute && !groupchat">
         <div class="usertab">
             <h2>GROUPS</h2>
         </div>
@@ -35,7 +35,7 @@
                         {{ item.groupName }}
                     </mat-card-title>
                 </mat-card-header>
-                <button mat-raised-button fxFlex="4" fxLayoutAlign="flex-end" matTooltip="Join {{item.groupName}}" mat-button (click)="chatGroup(item.groupName)">JOIN</button>
+                <button mat-raised-button fxFlex="4" fxLayoutAlign="flex-end" matTooltip="Join {{item.groupName}}" mat-button (click)="chatGroup(item.id)">JOIN</button>
             </mat-card>
         </div>
     </div>
@@ -48,5 +48,6 @@
             </mat-form-field>
             <button type="submit" *ngIf="groupRoute" mat-raised-button mat-button (click)="create()" [disabled]="!groupForm.valid">Create</button>
         </form>
+        <button *ngIf="groupchat" mat-raised-button fxFlex="4" fxLayoutAlign="flex-end" mat-button (click)="gotoGroup()">Add to group</button>
     </div>
 </div>

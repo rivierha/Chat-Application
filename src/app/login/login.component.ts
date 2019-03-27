@@ -38,5 +38,8 @@ export class LoginComponent implements OnInit {
     this.authService.loginWithGoogle().then(resolve => {
       setTimeout(() => { this.router.navigate(['/home']) }, 4000)
     })
+      .catch((error) => {
+        alert( error)
+      })
   }
 }

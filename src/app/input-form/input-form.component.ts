@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../services/chat.service';
 import { AngularFireStorage } from "@angular/fire/storage";
 import { URL } from 'url';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: 'app-input-form',
@@ -14,13 +14,8 @@ export class InputFormComponent implements OnInit {
   type: string;
   selectedFiles: FileList;
   file: File;
-  color: string = 'primary';
-  mode: 'determinate';
-  progressBarValue;
 
-  constructor(private chat: ChatService, private route: ActivatedRoute, private storage: AngularFireStorage) {
-
-      console.log(this.route.snapshot.paramMap.get("id") == localStorage.room)
+  constructor(private chat: ChatService, private route: ActivatedRoute, private router: Router, private storage: AngularFireStorage) {
   }
 
   ngOnInit() {
@@ -42,7 +37,7 @@ export class InputFormComponent implements OnInit {
           const URL = url;
           this.message = URL;
           if (this.route.snapshot.paramMap.get("id") == localStorage.room)
-          this.chat.sendMessage(URL, "file"); 
+            this.chat.sendMessage(URL, "file");
           else
             this.chat.sendGroupMessage(URL, "file", this.route.snapshot.paramMap.get("id"));
           this.message = '';
@@ -51,19 +46,31 @@ export class InputFormComponent implements OnInit {
     );
 
   }
+  goto() {
+    this.router.navigate([`home/${this.route.snapshot.paramMap.get("id")}`])
+  }
+
+  isGroupChat() {
+    if (this.route.snapshot.paramMap.get("id") != localStorage.room) {
+      return true;
+    } else {
+      return false;
+    }
+
+  }
 
   send() {
     this.message = this.message.trim();
-    if(this.message !== ''){
-    if (this.route.snapshot.paramMap.get("id") == localStorage.room) {
-      this.chat.sendMessage(this.message, "text");
-      this.message = '';
+    if (this.message !== '') {
+      if (this.route.snapshot.paramMap.get("id") == localStorage.room) {
+        this.chat.sendMessage(this.message, "text");
+        this.message = '';
+      }
+      else {
+        this.chat.sendGroupMessage(this.message, "text", this.route.snapshot.paramMap.get("id"));
+        this.message = '';
+      }
     }
-    else {   
-      this.chat.sendGroupMessage(this.message, "text", this.route.snapshot.paramMap.get("id"));
-      this.message = '';
-    }
-  }
   }
 
   handleSubmit(event) {

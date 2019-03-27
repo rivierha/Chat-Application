@@ -18,6 +18,7 @@
 
                 <mat-form-field>
                     <input type="password" matInput placeholder="Confirm your password" formControlName="confirmPassword" required>
+                    <mat-error *ngIf="userForm.controls.confirmPassword.errors">Password doesn't match!</mat-error>
                 </mat-form-field>
 
                 <mat-form-field>
